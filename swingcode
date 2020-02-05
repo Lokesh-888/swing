@@ -1,0 +1,121 @@
+package ac;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+import javax.swing.*;
+
+
+public class ac2 implements ActionListener
+{
+	JFrame f;
+	JPanel p;
+	JLabel lab1,lab2,lab3;
+	JTextField t1,t2,t3;
+	JButton b1,b2;
+	
+	public ac2() 
+	{
+		f = new JFrame("employee details");
+		p = new JPanel();
+		p.setLayout(null);
+		
+		lab1 = new JLabel("id");
+		lab1.setBounds(50, 60, 80, 20);
+		lab2 = new JLabel("name");
+		lab2.setBounds(50, 100, 80, 20);
+		lab3 = new JLabel("age");
+		lab3.setBounds(50,140 , 80, 20);
+		
+		t1 = new JTextField();
+		t1.setBounds(130, 60, 80, 20);
+		t2 = new JTextField();
+		t2.setBounds(130, 100, 80, 20);
+		t3 = new JTextField();
+		t3.setBounds(130, 140, 80, 20);
+		
+		
+		
+		b1 = new JButton("Submit");
+		b1.setBounds(90, 200, 80, 25);
+		b2 = new JButton("Reset");
+		b2.setBounds(180, 200, 80, 25);
+		
+		b1.addActionListener(this);
+		b2.addActionListener(this);
+		
+		p.add(lab1);
+		p.add(lab2);
+		p.add(lab3);
+		p.add(t1);
+		p.add(t2);
+		p.add(t3);
+		
+		p.add(b1);
+		p.add(b2);
+		
+		f.add(p);
+		f.setSize(400, 500);
+		f.setVisible(true);
+	}
+	
+	
+	public static void main(String[] args)
+	{
+		new ac2();
+	}
+
+
+	@Override
+	public void actionPerformed(ActionEvent e) 
+	{
+		
+		String id= t1.getText();
+		String name= t2.getText();
+		String age=t3.getText();
+		
+		if(e.getSource()==b1)
+		{
+		
+
+			try{
+				Class.forName("com.mysql.jdbc.Driver");  
+				Connection con=DriverManager.getConnection( "jdbc:mysql://localhost:3306/java","root",""); 
+			
+			 
+			System.out.println("connected");
+			String sql = "insert into emp values("+id+",'"+name+"','"+age+"')";
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate(sql);
+			
+			JOptionPane.showMessageDialog(null, "inserted Successfull!!!");
+			
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
+			}
+			
+			}
+		
+
+		
+		if(e.getSource()==b2)
+		{
+			
+			
+		}
+		
+	}
+
+
+	
+}
+
+
+
+
+
